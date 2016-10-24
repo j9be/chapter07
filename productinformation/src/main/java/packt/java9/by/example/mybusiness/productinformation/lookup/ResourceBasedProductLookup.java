@@ -2,6 +2,7 @@ package packt.java9.by.example.mybusiness.productinformation.lookup;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import packt.java9.by.example.mybusiness.productinformation.ProductInformation;
 import packt.java9.by.example.mybusiness.productinformation.ProductLookup;
 
@@ -10,6 +11,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 
+@Component
 public class ResourceBasedProductLookup implements ProductLookup {
     Logger log = LoggerFactory.getLogger(ResourceBasedProductLookup.class);
 

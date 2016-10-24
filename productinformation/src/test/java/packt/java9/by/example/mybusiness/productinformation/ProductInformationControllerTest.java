@@ -21,8 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -34,8 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
-@Configuration
-@ComponentScan(basePackages = "packt.java9.by.example")
 @EnableAutoConfiguration
 public class ProductInformationControllerTest {
 
@@ -45,8 +41,7 @@ public class ProductInformationControllerTest {
     @Test
     public void noParamGreetingShouldReturnDefaultMessage() throws Exception {
 
-        this.mockMvc.perform(get("/pi")).andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value(""));
+        this.mockMvc.perform(get("/pi")).andDo(print()).andExpect(status().isNotFound());
     }
 
     @Test
