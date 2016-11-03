@@ -1,20 +1,40 @@
 package packt.java9.by.example.mybusiness.productinformation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 @RestController
 public class ProductInformationController {
 
-    @Autowired
-    ProductLookup lookup;
+    private final ProductLookup lookup;
+
+
+    public ProductInformationController(@Autowired ProductLookup lookup) {
+        this.lookup = lookup;
+    }
 
     @RequestMapping("/pi/{productId}")
-    public ProductInformation getProductInformation(@PathVariable String productId, @RequestParam(value = "name", required = false, defaultValue = "World") String name) {
-        ProductInformation productInformation = lookup.byId(productId);
-        return productInformation;
+    public ProductInformation getProductInformation(@PathVariable String productId) {
+        return lookup.byId(productId);
+    }
+
+    @RequestMapping("/query/{query}")
+    public List<String> lookupProductByTitle(@PathVariable String query, HttpServletRequest request) {
+        final List<String> piIds = lookup.byQuery(query);
+        final List<String> urls = new ArrayList<>(piIds.size());
+        for( String piId : piIds ){
+            final String url = String.format("/pi/%s",piId);
+            urls.add(url);
+        }
+        return urls;
     }
 }

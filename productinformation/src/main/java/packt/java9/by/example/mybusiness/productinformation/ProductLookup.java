@@ -5,5 +5,6 @@ import java.util.List;
 public interface ProductLookup {
 
     ProductInformation byId(String id);
-    List<ProductInformation> byQuery(String query);
+
+    List<String> byQuery(String query);
 }
