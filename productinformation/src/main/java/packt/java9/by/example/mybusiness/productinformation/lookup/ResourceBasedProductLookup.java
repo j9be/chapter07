@@ -15,17 +15,6 @@ import java.util.*;
 public class ResourceBasedProductLookup implements ProductLookup {
     private static Logger log = LoggerFactory.getLogger(ResourceBasedProductLookup.class);
 
-    public ResourceBasedProductLookup() {
-    }
-
-    @Override
-    public ProductInformation byId(String id) {
-
-        loadProducts();
-
-        return products.get(id);
-    }
-
     private ProductInformation fromProperties(Properties properties) {
         final ProductInformation pi = new ProductInformation();
         pi.setTitle(properties.getProperty("title"));
@@ -46,24 +35,36 @@ public class ResourceBasedProductLookup implements ProductLookup {
             try {
                 Resource[] resources = new PathMatchingResourcePatternResolver().getResources("classpath:products/*.properties");
                 for (Resource resource : resources) {
-                    final int dotPos = resource.getFilename().lastIndexOf('.');
-                    if (dotPos != -1) {
-                        final String fileName = resource.getFilename().substring(0, dotPos);
-                        Properties properties = new Properties();
-                        properties.load(resource.getInputStream());
-                        final ProductInformation pi = fromProperties(properties);
-                        pi.setId(fileName);
-                        products.put(fileName, pi);
-                    }
+                    loadResource(resource);
                 }
                 productsAreNotLoaded = false;
             } catch (IOException ex) {
-                log.error("Test resources can not be read",ex);
+                log.error("Test resources can not be read", ex);
             }
         }
     }
 
+    private void loadResource(Resource resource) throws IOException {
+        final int dotPos = resource.getFilename().lastIndexOf('.');
+        final String id = resource.getFilename().substring(0, dotPos);
+        Properties properties = new Properties();
+        properties.load(resource.getInputStream());
+        final ProductInformation pi = fromProperties(properties);
+        pi.setId(id);
+        products.put(id, pi);
+    }
+
     private static final List<String> noProducts = new LinkedList<>();
+
+    @Override
+    public ProductInformation byId(String id) {
+        loadProducts();
+        if (products.containsKey(id)) {
+            return products.get(id);
+        } else {
+            return ProductInformation.emptyProductInformation;
+        }
+    }
 
     @Override
     public List<String> byQuery(String query) {

@@ -20,4 +20,8 @@ public class SpringConfigurationLocal {
         return new ResourceBasedProductLookup();
     }
 
+    @Bean
+    public ProductInformationServiceUrlBuilder urlBuilder(){
+        return null;
+    }
 }
