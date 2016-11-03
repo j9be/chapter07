@@ -3,11 +3,11 @@ package packt.java9.by.example.mybusiness.productinformation;
 import java.net.URI;
 
 public class ProductInformation {
-    String id;
-    String title;
-    String description;
-    final double size[] = new double[3];
-    double weight;
+    private String id;
+    private String title;
+    private String description;
+    private final double size[] = new double[3];
+    private double weight;
 
     public void setId(String id) {
         this.id = id;
@@ -43,5 +43,17 @@ public class ProductInformation {
 
     public double getWeight() {
         return weight;
+    }
+
+    public static final ProductInformation emptyProductInformation = new ProductInformation();
+
+    static {
+        emptyProductInformation.setTitle("");
+        emptyProductInformation.setDescription("");
+        emptyProductInformation.setId("");
+        emptyProductInformation.setWeight(0);
+        emptyProductInformation.getSize()[0] = 0;
+        emptyProductInformation.getSize()[1] = 0;
+        emptyProductInformation.getSize()[2] = 0;
     }
 }

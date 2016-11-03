@@ -3,6 +3,8 @@ package packt.java9.by.example.mybusiness.productinformation;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -12,13 +14,21 @@ import packt.java9.by.example.mybusiness.productinformation.lookup.ResourceBased
 @Configuration
 @Aspect
 public class SpringConfigurationAspect {
+    private static Logger log = LoggerFactory.getLogger("AUDIT_LOG");
 
     @Around("execution(* byId(..))")
-    public ProductInformation before(ProceedingJoinPoint jp) throws Throwable {
-        System.out.println("before join point ******");
+    public ProductInformation byIdQueryLogging(ProceedingJoinPoint jp) throws Throwable {
+        log.info("byId query is about to run");
         ProductInformation pi = (ProductInformation) jp.proceed(jp.getArgs());
-        System.out.println("after join point ******");
+        log.info("byId query was executed");
         return pi;
     }
 
+    @Around("execution(* url(..))")
+    public String urlCreationLogging(ProceedingJoinPoint jp) throws Throwable {
+        log.info("url is to be created");
+        String url = (String) jp.proceed(jp.getArgs());
+        log.info("url created was "+url);
+        return url;
+    }
 }

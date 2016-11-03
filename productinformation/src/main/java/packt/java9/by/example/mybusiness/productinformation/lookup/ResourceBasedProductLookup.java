@@ -15,18 +15,6 @@ import java.util.*;
 public class ResourceBasedProductLookup implements ProductLookup {
     private static Logger log = LoggerFactory.getLogger(ResourceBasedProductLookup.class);
 
-    private static final ProductInformation emptyProductInformation = new ProductInformation();
-
-    static {
-        emptyProductInformation.setTitle("");
-        emptyProductInformation.setDescription("");
-        emptyProductInformation.setId("");
-        emptyProductInformation.setWeight(0);
-        emptyProductInformation.getSize()[0] = 0;
-        emptyProductInformation.getSize()[1] = 0;
-        emptyProductInformation.getSize()[2] = 0;
-    }
-
     public ResourceBasedProductLookup() {
     }
 

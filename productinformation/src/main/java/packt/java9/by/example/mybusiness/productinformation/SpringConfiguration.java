@@ -17,11 +17,11 @@ public class SpringConfiguration {
     @Bean
     @Primary
     public ProductLookup productLookup() {
-
-        RestClientProductLookup pl = new RestClientProductLookup();
-        pl.setByIdUrl("http://localhost:8081/product/{id}");
-        return pl;
+        return new RestClientProductLookup(urlBuilder());
     }
 
-
+    @Bean
+    public ProductInformationServiceUrlBuilder urlBuilder(){
+        return new ProductInformationServiceUrlBuilder("http://localhost");
+    }
 }
