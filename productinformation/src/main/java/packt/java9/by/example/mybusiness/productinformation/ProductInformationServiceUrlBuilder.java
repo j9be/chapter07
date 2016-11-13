@@ -7,17 +7,17 @@ public class ProductInformationServiceUrlBuilder {
         this.baseUrl = baseUrl;
     }
 
-    public String url(String service, String parameter) {
+    public String url(String service) {
         final String serviceUrl;
         switch (service) {
             case "pi":
-                serviceUrl = baseUrl + ":8081/product/" + parameter;
+                serviceUrl = baseUrl + ":8081/product/{id}";
                 break;
             case "query":
-                serviceUrl = baseUrl + ":8081/query/" + parameter;
+                serviceUrl = baseUrl + ":8081/query/{query}";
                 break;
             case "inventory":
-                serviceUrl = baseUrl + ":8083/inventory/" + parameter;
+                serviceUrl = baseUrl + ":8083/inventory/{id}";
                 break;
             default:
                 serviceUrl = null;

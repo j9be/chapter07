@@ -28,13 +28,13 @@ public class RestClientProductLookup implements ProductLookup {
         uriParameters.put("id", id);
         RestTemplate rest = new RestTemplate();
         InventoryItemAmount amount =
-                rest.getForObject(piSUBuilder.url("inventory", id),
+                rest.getForObject(piSUBuilder.url("inventory"),
                         InventoryItemAmount.class,
                         uriParameters);
         log.info("amount {}.",amount);
         if ( amount.getAmount() > 0) {
             log.info("There items from {}. We are offering",id);
-            return rest.getForObject(piSUBuilder.url("pi", id),
+            return rest.getForObject(piSUBuilder.url("pi"),
                     ProductInformation.class,
                     uriParameters);
         } else {
@@ -48,6 +48,6 @@ public class RestClientProductLookup implements ProductLookup {
         Map<String, String> uriParameters = new HashMap<>();
         uriParameters.put("query", query);
         RestTemplate rest = new RestTemplate();
-        return rest.getForObject(piSUBuilder.url("query", query), List.class, uriParameters);
+        return rest.getForObject(piSUBuilder.url("query"), List.class, uriParameters);
     }
 }

@@ -1,20 +1,18 @@
 package packt.java9.by.example.mybusiness.productinformation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 @RestController
 public class ProductInformationController {
-
     private final ProductLookup lookup;
 
 
@@ -31,8 +29,8 @@ public class ProductInformationController {
     public List<String> lookupProductByTitle(@PathVariable String query, HttpServletRequest request) {
         final List<String> piIds = lookup.byQuery(query);
         final List<String> urls = new ArrayList<>(piIds.size());
-        for( String piId : piIds ){
-            final String url = String.format("/pi/%s",piId);
+        for (String piId : piIds) {
+            final String url = String.format("/pi/%s", piId);
             urls.add(url);
         }
         return urls;

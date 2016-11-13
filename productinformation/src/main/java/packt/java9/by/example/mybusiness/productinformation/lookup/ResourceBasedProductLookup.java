@@ -68,7 +68,7 @@ public class ResourceBasedProductLookup implements ProductLookup {
 
     @Override
     public List<String> byQuery(String query) {
-        log.error("query is {}", query);
+        log.info("query is {}", query);
         loadProducts();
         List<String> pis = new LinkedList<>();
         StringTokenizer st = new StringTokenizer(query, "&=");
